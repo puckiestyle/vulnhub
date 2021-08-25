@@ -22,8 +22,8 @@ GoBuster
 
 Next, we’ll try brute-forcing the web server’s hidden files and directories with the /usr/share/dirb/wordlists/common.txt wordlist, searching for PHP, text, and HTML files.
 
-┌──(kali㉿kali)-[~]
-└─$ gobuster dir -u http://192.168.120.148 -w /usr/share/dirb/wordlists/common.txt -x php,txt,html
+(kali㉿kali)-[~] └─$ gobuster dir -u http://192.168.120.148 -w /usr/share/dirb/wordlists/common.txt -x php,txt,html
+
 ===============================================================
 Gobuster v3.0.1
 ...
